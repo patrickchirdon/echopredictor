@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- Bootstrap core CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+<meta charset="UTF-8">
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" rel="stylesheet">
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+
+
+<script src="{{ url_for('static', filename='scripts/site.js') }}"></script>
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        function cb(selection) {
+            $.getJSON({
+                url: "/callback", data: { 'data': selection }, success: function (result) {
+                    Plotly.newPlot('chart', graphJSON, {});;
+
+                }
+            });
+        }
+    </script>
+
+
+<!-- Custom styles for this template -->
+<link href="{{ url_for('static', filename='css/site.css') }}" rel="stylesheet">
+
+      <script>
+        async function callback() {
+
+            if (response.ok) {
+                let chartJson = await response.json();
+                if (response.ok) {
+                Plotly.newPlot('chart', graphJSON, {});
+                }
+        }
+
+    </script>
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description" content="A demo site featuring an ajax-based stock widget that uses Python and Flask as a backend microservice API">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static',    filename='css/site.css') }}" rel="stylesheet">
+  </head>
+
+
+    <title>Stock Widget - ECHO INVESTMENTS</title>
+
+    <script>
+window.onload = function () {
+    if (localStorage.getItem("hasCodeRunBefore") === null) {
+        hello()
+        localStorage.setItem("hasCodeRunBefore", true);
+    }
+}
+</script>
+<style>
+div.background {
+  background: url('static/stock-market-thanksgiving-day-2021.jpg');
+  border: 2px solid black;
+}
+
+div.transbox {
+  margin: 30px;
+  background-color: #ffffff;
+  border: 1px solid black;
+  opacity: 0.6;
+}
+
+div.transbox p {
+  margin: 5%;
+  font-weight: bold;
+  color: #000000;
+}
+</style>
+
+
+
+<center>
+
+<div class="background">
+    <img src="static/stock_simulator_1.png" width="100%" height="auto">
+            <!-- Bread crumb -->
+
+
+
+                    <center><h3 class="text-primary"><p style="color:white;">TODAY'S {{quote}} STOCK DATA</p></h3> </center>
+                <div class="col-md-7 align-self-center">
+
+
+                </div>
+            </div>
+            <!-- End Bread crumb -->
+            <!-- Container fluid  -->
+            <div class="content">
+                <!-- Start Page Content -->
+                <!-- Header -->
+
+
+<!-- Login  -->
+<div class="background">
+  <div class="container">
+
+    <div class="log_in_box">
+      <form class="login" action = "{{ url_for('insertintotable') }}" method = "POST">
+        <div class="login_title" class="main">
+            <center><font color="white">
+                <a href="https://finance.yahoo.com/lookup/?guccounter=1&guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&guce_referrer_sig=AQAAAFxKH5xKSoqfzLhaONVlLp8UyGINGeLvXEDR5lQKuNrW_coHKIRNTaNrKw0DDluTWQ8pV_82OATJcO9SJ8U8H4cbaXJKUN_AB0bo1B4YpCYFQ_PBHMNbKXq6z3Lt1dPzwf0r90eGYMwKF43qm9-aG8jbIf3jSp9FicrHZhEdEunD" class="btn btn-primary">Stock Ticker Lookup</a>
+
+        <h2><span class="top-heading-inner"><p style="color:white;">PLEASE ENTER A STOCK SYMBOL</p></span></h2>{% if not_found %}
+          <div class="alert alert-danger" style="color: red;" role="alert">
+  Stock Symbol (Ticker) Not Found. Please Enter a Valid Stock Symbol
+  </font>
+
+
+  </center>
+
+  <style>
+    .div-1 {
+        background-color: #EBEBEB;
+    }
+
+    .div-2 {
+    	background-color: #ABBAEA;
+    }
+
+
+</style>
+
+
+</div>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <input type="text" class="form-control" name = "nm" placeholder="Company Stock Symbol">
+
+        </div>
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+          <button class="btn btn-login"><font color="black">SUBMIT</font></button>
+        </div>
+         <div class="main">
+                    <div class="div-1">
+                        <div class="div-1">
+                            <div class="div-1">
+                                <div class="media-left meida media-middle">
+                                    <span><i class="ti-bag f-s-40"></i></span>
+
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h3 class="color-white text-white">{{open_s}}</h3>
+                                    <p class="m-b-0 text-white" style="background-color:powderblue;"><b>OPEN</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="main">
+                        <div class="w3-white">
+                            <div class="media widget-ten">
+                                <div class="media-left meida media-middle">
+                                    <span><i class="ti-comment f-s-40"></i></span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h3 class="color-white text-white">{{high_s}}</h3>
+                                    <p class="m-b-0 text-white" style="background-color:powderblue;"><b>HIGH </b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="w3-blue">
+                            <div class="media widget-ten">
+                                <div class="media-left meida media-middle">
+                                    <span><i class="ti-vector f-s-40"></i></span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h3 class="color-white text-white">{{low_s}}</h3>
+                                    <p class="m-b-0 text-white" style="background-color:powderblue;"><b>LOW</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main">
+                        <div class="w3-white">
+                            <div class="media widget-ten">
+                                <div class="media-left meida media-middle">
+                                    <span><i class="ti-location-pin f-s-40"></i></span>
+                                </div>
+                                <div class="media-body media-text-right">
+                                    <h3 class="color-white text-white">{{close_s}}</h3>
+                                    <p class="m-b-0 text-white" style="background-color:powderblue;"><b>CLOSE </b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+      </form>
+    </div>
+  </div>
+
+
+
+                </div>
+                    </div>
+
+</div>
+<!-- End Lgin  -->
+
+
+
+
+<!-- ENd Header -->
+
+
+
+
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {
+  box-sizing: border-box;
+}
+
+.body {
+  background-color: #2C82B7;
+  padding: 20px;
+  font-family: Arial;
+}
+
+/* Center website */
+.main {
+  background-color: #2C82B7;
+  max-width: 1000px;
+  margin: auto;
+}
+
+h1 {
+  font-size: 50px;
+  word-break: break-all;
+}
+
+.row {
+  margin: 10px -16px;
+}
+
+/* Add padding BETWEEN each column */
+.row,
+.row > .column {
+  padding: 8px;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  display: none; /* Hide all elements by default */
+}
+
+/* Clear floats after rows */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Content */
+.content {
+  background-color: #2C82B7;
+  padding: 10px;
+}
+
+/* The "show" class is added to the filtered elements */
+.show {
+  display: block;
+}
+
+/* Style the buttons */
+.btn {
+  border: none;
+  outline: none;
+  padding: 12px 16px;
+  background-color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #ddd;
+}
+
+.btn.active {
+  background-color: #666;
+  color: white;
+}
+</style>
+
+<!-- MAIN (Center website) -->
+<div class="background">
+
+<h3><font color="white">Select Your Time Series Model</font></h3>
+<hr>
+
+<h3><font color="white">Time Series Prediction</font></h3>
+
+
+
+<!-- Portfolio Gallery Grid -->
+<center>
+ <button id="myButton2" class="float-right submit-button" onclick="hello()" >Refresh Graphs</button>
+
+
+<script>
+
+function hello() {
+
+
+
+
+
+      document.getElementById("monte").src="static/echo.png";
+      document.getElementById("thirty").src="static/echo.png";
+      document.getElementById("year").src="static/echo.png";
+
+
+  }
+  </script>
+<div id="myBtnContainer">
+  <button class="btn active" onclick="filterSelection('all')"> Show all</button>
+  <button class="btn" onclick="filterSelection('lr')"> Linear Regression</button>
+
+
+  <button class="btn" onclick="filterSelection('monte')"> Monte Carlo</button>
+
+
+
+</div>
+
+<style>
+    .row {
+        background-color: #2C82B7;
+    }
+
+</style>
+<!-- Portfolio Gallery Grid -->
+<div class="row" align="left">
+
+
+
+  <div class="column monte">
+   <div class="content">
+      <img src="/static/myfig.jpg" alt="monte" style="width:200%" id="monte">
+
+    </div>
+    </div>
+    </div>
+
+<div class="row" align="left">
+  <div class="column lr">
+    <div class="content">
+      <img src="/static/ScatterPlot_05.png" alt="lr" style="width:200%" id="thirty">
+
+    </div>
+
+
+    <div class="content">
+      <img src="/static/ScatterPlot_0530day.png" alt="lr" style="width:200%" id="year">
+
+    </div>
+  </div>
+
+</div>
+
+
+
+
+  </div>
+
+
+
+
+
+
+
+
+<!-- END GRID -->
+</div>
+
+</center>
+
+<!-- END GRID -->
+</div>
+
+<!-- END MAIN -->
+</div>
+
+<script>
+
+filterSelection("all")
+function filterSelection(c) {
+  var x, i;
+  x = document.getElementsByClassName("column");
+  if (c == "all") c = "";
+  for (i = 0; i < x.length; i++) {
+    w3RemoveClass(x[i], "show");
+    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+  }
+}
+
+function w3AddClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    if (arr1.indexOf(arr2[i]) == -1) {element.className += " " + arr2[i];}
+  }
+}
+
+function w3RemoveClass(element, name) {
+  var i, arr1, arr2;
+  arr1 = element.className.split(" ");
+  arr2 = name.split(" ");
+  for (i = 0; i < arr2.length; i++) {
+    while (arr1.indexOf(arr2[i]) > -1) {
+      arr1.splice(arr1.indexOf(arr2[i]), 1);
+    }
+  }
+  element.className = arr1.join(" ");
+}
+
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+
+
+
+// Add active class to the current button (highlight it)
+var btnContainer = document.getElementById("myBtnContainer");
+var btns = btnContainer.getElementsByClassName("btn");
+for (var i = 0; i < btns.length; i++) {
+  btns[i].addEventListener("click", function(){
+    var current = document.getElementsByClassName("active");
+    current[0].className = current[0].className.replace(" active", "");
+    this.className += " active";
+  });
+}
+</script>
+<div class="content">
+ <style>
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
+</head>
+<body style="text-align:center">
+
+<h2>Interactive Stock Graph</h2>
+
+<div class="popup"><b><h2>Candlestick Chart: By default, increasing candles are drawn in green whereas decreasing are drawn in red. A simple moving average (SMA) is a calculation that takes the arithmetic mean of a given set of prices over the specific number of days in the past; for example, over the previous 15, 30, 100, or 200 days. </h2></b>
+
+
+
+
+<h2>****After selecting the stock above, click reload  to see the interactive plot</h2>
+<h2>you must reload each time you select a new stock</h2>
+</span>
+</div>
+
+<script>
+// When the user clicks on div, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+<br>
+<br>
+<body style="font-family:arial, sans-serif">
+<h1>Stock Price</h1>
+
+</body>
+
+<body style="font-family:arial, sans-serif">
+   <button id="myButton" class="float-right submit-button" >Refresh Graph</button>
+
+<script type="text/javascript">
+    document.getElementById("myButton").onclick = function () {
+        location.href = "http://echoinvestments.pythonanywhere.com/";
+    };
+</script>
+
+   <div class="login_page login_solid_bg">
+  <div class="content">
+<br>
+<br>
+
+
+
+    <div id="chart" class="chart"></div>
+</body>
+
+
+<script>
+d={{ graphJSON | safe }};
+Plotly.newPlot('chart', d, {});
+
+</script>
+<div class='content'>
+
+  <body class="text-center">
+      <div class="cover-container d-flex h-100 p-3 mx-auto flex-column">
+
+          <div id="widgetContent">
+            <main role="main" class="inner">
+             <font color="white" size="+2">
+            <b>
+              <p>Can Crosses Help Your Trade? </p>
+              <p>Death Cross-When the 50 day moving average moves below the 200 day moving average. This is a sign of an impending sell off </p>
+              <p>Golden Cross- When the 50 day moving average moves above the 200 day moving average. A successful buy.</p></font>
+              </b>
+            </main>
+          </div>
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta charset="UTF=8">
+
+</head>
+
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+	<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+
+
+
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/modules/data.js"></script>
+<script src="https://code.highcharts.com/stock/modules/exporting.js"></script>
+
+
+
+          <footer class="mastfoot mt-auto">
+            <div class="inner">
+            </div>
+          </footer>
+        </div>
+
+
+
+
+
+                    <div class="content">
+                        <div class="card">
+                            <div class="card-title">
+                                 <font color="black">
+                                <h4>PREDICTED {{quote}} PRICE FOR THE NEXT 7 DAYS in $</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Predicted</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr>
+                                                <td>
+                                                    <div>
+
+                                                        <a href="https://finance.yahoo.com/quote/{{quote}}"></a>
+                                                    </div>
+                                                </td>
+
+                                                <td><h4>{% for row in forecast_set %}
+                                          {{row[0]}}<br>
+                                          {% endfor %}</h4></td>
+                                          <td><h4>upper 95% confidence</h4></td>
+                                           <td><h4>{{secondset2a}}</h4></td>
+                                          <td><h4>lower 95% confidence</h4></td>
+                                           <td><h4>{{secondset3}}</h4></td></h4>
+                                         </td>
+                                          <td><h4>upper 75% confidence</h4></td>
+                                          <td><h4> <td><h4>{{secondset4}}</h4></td>
+                                          </h4>
+                                          </td>
+                                          <td><h4>lower 75% confidence</h4></td>
+                                          <td><h4> <td><h4>{{secondset5}}</h4></td>
+                                          </h4>
+                                         </td>
+                                          </font>
+                                                <td><span></span></td>
+
+
+                                                <td><span></span></td>
+                                                <td><span class="badge badge-success"></span></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
+        </div>
+
+</center>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+    <script src="{{ url_for('static',    filename='scripts/site.js') }}"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
+
